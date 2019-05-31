@@ -83,5 +83,13 @@ class FormServiceProvider extends ServiceProvider
                 '0' => 'Não',
             ],
         ]);
+
+        Form::component('bsImage', 'agenciafmd/form::components.form.image', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+        ]);
     }
 }
