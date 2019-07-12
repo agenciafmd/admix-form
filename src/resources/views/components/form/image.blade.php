@@ -13,7 +13,7 @@
 
     $width = $attributes['width'] ?? 800;
     $height = $attributes['height'] ?? 600;
-    $quality = $attributes['quality'] ?? 85;
+    $quality = $attributes['quality'] ?? 92;
     $crop = $attributes['crop'] ? 'true' : 'false';
 
     unset($attributes['width']);
@@ -27,55 +27,38 @@
     <div class="row gutters-sm">
         {{ Form::label("{$label} ({$width}x{$height})", null, ['class' => 'col-xl-3 col-form-label pt-0 pt-xl-2']) }}
         <div class="col-xl-5">
-            {{ Form::file("media[{$name}]", $attributes) }}
-
-            {{ Form::hidden("width[{$name}]", $width) }}
-            {{ Form::hidden("height[{$name}]", $height) }}
-            {{ Form::hidden("quality[{$name}]", $quality) }}
-            {{ Form::hidden("crop[{$name}]", $crop) }}
-
+            {{ Form::file("file", $attributes) }}
             @include('agenciafmd/form::partials.invalid-feedback')
         </div>
         @include('agenciafmd/form::partials.helper')
     </div>
 </li>
 
-<!-- TODO: Atrelar este modal com o botão de alterar descrição
-<div class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
--->
-
 @push('scripts')
     <script>
         $(function () {
-            {{--var btnCust = '<button type="button" class="btn btn-sm btn-kv btn-outline-secondary kv-file-tags-{{ str_slug($attributes['id']) }}" title="Alterar descrição">' +--}}
-            {{--    '<i class="fe fe-tag"></i>' +--}}
-            {{--    '</button>';--}}
-            var btnCust = ''; {{-- TODO --}}
+            var btnCust = '<button type="button" class="btn btn-sm btn-kv btn-outline-secondary kv-file-tags-{{ Str::slug($attributes['id']) }}" title="Alterar descrição">' +
+                '<i class="fe fe-tag"></i>' +
+                '</button>';
 
-            $("#{{ $attributes['id'] }}").fileinput({
+            var el = $("#{{ $attributes['id'] }}");
+            el.fileinput({
                 theme: "fe",
                 language: "pt-BR",
                 overwriteInitial: true,
                 showClose: false,
                 showUpload: false,
                 showCancel: false,
-                uploadUrl: '/',
+                showBrowse: false,
+                uploadAsync: false,
+                browseOnZoneClick: true,
+                uploadUrl: '{{ route('admix.media.upload') }}',
+                uploadExtraData: function(previewId, index) {
+                    return {
+                        key: index,
+                        collection: '{{ $name }}'
+                    };
+                },
                 layoutTemplates: {
                     main1: "{preview}\n" +
                         "<div class='input-group {class}'>\n" +
@@ -95,12 +78,22 @@
                     size: '<span>({sizeText})</span>',
 
                 },
-                allowedFileExtensions: ["jpg", "jpeg", "png", "gif"],
+                allowedFileExtensions: ["jpg", "jpeg", "png"],
+                resizeImage: true,
+                maxImageWidth: '{{ $width }}',
+                maxImageHeight: '{{ $height }}',
+                resizePreference: 'height',
+                resizeImageQuality: 0.{{ $quality }},
                 minImageWidth: '{{ $width }}',
                 minImageHeight: '{{ $height }}',
                 fileActionSettings: {
                     showUpload: false,
                     showDrag: false,
+                    dragIcon: '<span class="btn btn-sm btn-kv btn-outline-secondary"><i class="fe fe-move"></i></span>',
+                    indicatorNew: '<span class="btn btn-sm btn-kv btn-outline-warning"><i class="fe fe-star"></i></span>',
+                    indicatorSuccess: '<span class="btn btn-sm btn-kv btn-outline-success"><i class="fe fe-check"></i></span>',
+                    indicatorError: '<span class="btn btn-sm btn-kv btn-outline-danger"><i class="fe fe-alert-triangle"></i></span>',
+                    indicatorLoading: '<span class="btn btn-sm btn-kv btn-outline-secondary"><i class="fe fe-spinner fe-loader"></i></span>',
                 },
                 deleteUrl: '{{ route('admix.media.destroy') }}',
                 deleteExtraData: function () {
@@ -122,127 +115,45 @@
                         },
                     ],
                 @endif
+            // }).on('fileselect', function(event, data) {
+            //     if(el.parents('.file-input').find('.file-preview .file-preview-thumbnails').html().trim() !== '') {
+            //         console.log('parou');
+            //         event.preventDefault();
+            //     }
+            }).on("filebatchselected", function(event, files) {
+                // triga o upload assim que o arquivo é enviado
+                el.fileinput("upload");
+            }).on('filebatchuploadsuccess', function(event, data) {
+                //console.log(data);
+                el.parents('form').append('<input type="hidden" name="media[' + data.response.uuid + '][name]" value="' + data.response.name + '" />');
+                el.parents('form').append('<input type="hidden" name="media[' + data.response.uuid + '][collection]" value="' + data.response.collection + '" />');
             });
 
-            $('.kv-file-tags-{{ str_slug($attributes['id']) }}').on('click', function() {
+            $('.kv-file-tags-{{ Str::slug($attributes['id']) }}').on('click', function() {
                 var uuid = $(this).parents('.file-footer-buttons').find('.kv-file-remove').attr('data-key');
+                var modal = $("#modalMediaMetaPost");
 
                 $.get("{{ route('admix.media.meta', ['key' => '']) }}/" + uuid, function(data) {
-
-
-                    // alertify.confirm('Descrição', data, function() {
-                    //     var form = $('#formMediaMetaPost');
-                    //
-                    //     $.post(form.attr('action'), form.serialize()).done(function() {
-                    //         alertify.success('Descrição atualizada!');
-                    //     });
-                    //
-                    // },function(){
-                    //     // alertify.error('Declined' + uuid);
-                    // }).set({
-                    //     labels: {
-                    //         ok: 'Salvar',
-                    //         cancel: 'Cancelar'
-                    //     }
-                    // });
+                    modal.find('.modal-body').html(data);
+                    modal.modal('show');
                 });
+
+                modal.find('.btn-primary').off('click').on('click', function () {
+                    var form = $("#formMediaMetaPost");
+                    $.post(form.attr('action'), form.serialize()).done(function() {
+                        modal.modal('hide');
+
+                        $.toast({
+                            title: 'Atenção',
+                            content: 'Item atualizado com sucesso',
+                            type: 'success',
+                            delay: 3000,
+                            pause_on_hover: true
+                        });
+                    });
+                });
+
             });
-
-            {{--$("#{{ $attributes['id'] }}").fileinput({--}}
-            {{--    theme: 'fa',--}}
-            {{--    language: 'pt-BR',--}}
-            {{--    overwriteInitial: true,--}}
-            {{--    showClose: false,--}}
-            {{--    showUpload: false,--}}
-            {{--    showCancel: false,--}}
-            {{--    uploadUrl: '/',--}}
-            {{--    browseLabel: '<i class="d-none d-sm-inline-block">Procurar</i>',--}}
-            {{--    elErrorContainer: '#kv-wrapper-errors-{{ $attributes['id'] }}',--}}
-            {{--    msgErrorClass: 'alert alert-block alert-danger',--}}
-            {{--    layoutTemplates: {--}}
-            {{--        main1: "{preview}\n" +--}}
-            {{--            "<div class='input-group {class}'>\n" +--}}
-            {{--            "   <div class='input-group-btn input-group-prepend'>\n" +--}}
-            {{--            "       {browse}\n" +--}}
-            {{--            "       {upload}\n" +--}}
-            {{--            "   </div>\n" +--}}
-            {{--            "   {caption}\n" +--}}
-            {{--            "</div>",--}}
-            {{--        actions: '<div class="file-actions">\n' +--}}
-            {{--            '    <div class="file-footer-buttons">\n' +--}}
-            {{--            '        {download} {upload} {delete} {zoom} {other} ' + btnCust +--}}
-            {{--            '    </div>\n' +--}}
-            {{--            '</div>\n' +--}}
-            {{--            '{drag}\n' +--}}
-            {{--            '<div class="clearfix"></div>',--}}
-            {{--    },--}}
-            {{--    allowedFileExtensions: ["jpg", "jpeg", "png", "gif"],--}}
-            {{--    minImageWidth: '{{ $width }}',--}}
-            {{--    minImageHeight: '{{ $height }}',--}}
-            {{--    fileActionSettings: {--}}
-            {{--        showUpload: false,--}}
-            {{--        showDrag: false,--}}
-            {{--        removeIcon: '<i class="fa fa-close"></i>',--}}
-            {{--        downloadIcon: '<i class="fa fa-download"></i>',--}}
-            {{--        dragIcon: '<span class="btn btn-sm btn-kv btn-outline-secondary"><i class="fa fa-arrows"></i></span>',--}}
-            {{--        indicatorNew: '<span class="btn btn-sm btn-kv btn-outline-warning"><i class="fa fa-star"></i></span>',--}}
-            {{--        indicatorSuccess: '<span class="btn btn-sm btn-kv btn-outline-success"><i class="fa fa-check"></i></span>',--}}
-            {{--        indicatorError: '<span class="btn btn-sm btn-kv btn-outline-danger"><i class="fa fa-exclamation"></i></span>',--}}
-            {{--        indicatorLoading: '<span class="btn btn-sm btn-kv btn-outline-secondary"><i class="fa fa-spinner fa-pulse"></i></span>',--}}
-            {{--    },--}}
-            {{--    deleteUrl: '{{ route('admix.media.destroy') }}',--}}
-            {{--    deleteExtraData: function () {--}}
-            {{--        return {--}}
-            {{--            _token: $('meta[name="csrf-token"]').attr('content')--}}
-            {{--        };--}}
-            {{--    },--}}
-            {{--    previewZoomButtonIcons: {--}}
-            {{--        prev: '<i class="fa fa-chevron-left"></i>',--}}
-            {{--        next: '<i class="fa fa-chevron-right"></i>'--}}
-            {{--    },--}}
-            {{--    @if($value)--}}
-            {{--    initialPreview: ['{{ (config("filesystems.default") == "cdn") ? config("filesystems.disks.cdn.url") . "/" . $value->name : Storage::url($value->name) }}'],--}}
-            {{--    initialPreviewAsData: true,--}}
-            {{--    initialPreviewDownloadUrl: '{{ (config("filesystems.default") == "cdn") ? config("filesystems.disks.cdn.url") . "/" : asset(Storage::url('')) }}{filename}',--}}
-            {{--    initialPreviewConfig: [--}}
-            {{--        {--}}
-            {{--            caption: '{{ $value->name }}',--}}
-            {{--            filename: '{{ $value->name }}',--}}
-            {{--            downloadUrl: '{{ (config("filesystems.default") == "cdn") ? config("filesystems.disks.cdn.url") . "/" . $value->name : Storage::url($value->name) }}',--}}
-            {{--            size: '{{ $value->size }}',--}}
-            {{--            key: '{{ $value->uuid }}',--}}
-            {{--        },--}}
-            {{--    ],--}}
-            {{--    @endif--}}
-            {{--}).on('filesorted', function(e, params) {--}}
-            {{--    console.log(params.stack);--}}
-            {{--    var _token = $('meta[name="csrf-token"]').attr('content');--}}
-            {{--    $.post('{{ route('admix.media.sort') }}', { _token: _token, stack: params.stack });--}}
-            {{--    console.log('File sorted params', params);--}}
-            {{--});--}}
-
-
-            {{--$('.kv-file-tags-{{ str_slug($attributes['id']) }}').on('click', function() {--}}
-            {{--    var uuid = $(this).parents('.file-footer-buttons').find('.kv-file-remove').attr('data-key');--}}
-
-            {{--    $.get("{{ route('admix.media.meta', ['key' => '']) }}/" + uuid, function(data) {--}}
-            {{--        alertify.confirm('Descrição', data, function() {--}}
-            {{--            var form = $('#formMediaMetaPost');--}}
-
-            {{--            $.post(form.attr('action'), form.serialize()).done(function() {--}}
-            {{--                alertify.success('Descrição atualizada!');--}}
-            {{--            });--}}
-
-            {{--        },function(){--}}
-            {{--            // alertify.error('Declined' + uuid);--}}
-            {{--        }).set({--}}
-            {{--            labels: {--}}
-            {{--                ok: 'Salvar',--}}
-            {{--                cancel: 'Cancelar'--}}
-            {{--            }--}}
-            {{--        });--}}
-            {{--    });--}}
-            {{--});--}}
         });
     </script>
 @endpush
