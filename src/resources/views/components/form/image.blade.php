@@ -10,7 +10,7 @@
     $attributes['id'] = $attributes['id'] ?? Str::slug($name);
 
     $modelName = strtolower(class_basename($value));
-    $fields = config("medialibrary.conversions.{$modelName}");
+    $fields = config("upload-configs.{$modelName}");
 
     $width = $fields[$name]['width'] ?? 800;
     $height = $fields[$name]['height'] ?? 600;

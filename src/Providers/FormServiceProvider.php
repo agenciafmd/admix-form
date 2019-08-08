@@ -84,6 +84,19 @@ class FormServiceProvider extends ServiceProvider
             ],
         ]);
 
+        Form::component('bsBoolean', 'agenciafmd/form::components.form.select', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+            'options' => [
+                '' => '-',
+                '1' => 'Sim',
+                '0' => 'Não',
+            ],
+        ]);
+
         Form::component('bsImage', 'agenciafmd/form::components.form.image', [
             'label',
             'name',
