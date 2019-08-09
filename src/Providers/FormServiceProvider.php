@@ -55,6 +55,51 @@ class FormServiceProvider extends ServiceProvider
             'type' => 'email'
         ]);
 
+        Form::component('bsNumber', 'agenciafmd/form::components.form.generic', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+            'type' => 'number'
+        ]);
+
+        Form::component('bsDate', 'agenciafmd/form::components.form.generic', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+            'type' => 'date'
+        ]);
+
+        Form::component('bsDateTime', 'agenciafmd/form::components.form.generic', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+            'type' => 'datetime-local'
+        ]);
+
+        Form::component('bsTel', 'agenciafmd/form::components.form.generic', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+            'type' => 'tel'
+        ]);
+
+        Form::component('bsColor', 'agenciafmd/form::components.form.generic', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+            'type' => 'color'
+        ]);
+
         Form::component('bsPassword', 'agenciafmd/form::components.form.password', [
             'label',
             'name',
@@ -98,6 +143,22 @@ class FormServiceProvider extends ServiceProvider
         ]);
 
         Form::component('bsImage', 'agenciafmd/form::components.form.image', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+        ]);
+
+        Form::component('bsTextarea', 'agenciafmd/form::components.form.textarea', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+        ]);
+
+        Form::component('bsWysiwyg', 'agenciafmd/form::components.form.wysiwyg', [
             'label',
             'name',
             'value' => null,
