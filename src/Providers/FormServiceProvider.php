@@ -79,7 +79,7 @@ class FormServiceProvider extends ServiceProvider
             'value' => null,
             'attributes' => [],
             'helper' => null,
-            'type' => 'datetime-local'
+            'type' => 'datetimeLocal'
         ]);
 
         Form::component('bsTel', 'agenciafmd/form::components.form.generic', [
