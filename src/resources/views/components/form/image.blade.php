@@ -12,6 +12,11 @@
     $modelName = strtolower(class_basename($value));
     $fields = config("upload-configs.{$modelName}");
 
+    if(isset($attributes['config'])) {
+        $fields = $attributes['config'];
+        unset($attributes['config']);
+    }
+
     $width = $fields[$name]['width'] ?? 800;
     $height = $fields[$name]['height'] ?? 600;
     $quality = $fields[$name]['quality'] ?? 92;
@@ -48,22 +53,22 @@
                 resizeImage: true,
                 resizeImageQuality: '{{ number_format($quality/100, 2, '.', '') }}',
                 @if($value->getFirstMedia($name))
-                    initialPreview: ['{{ $value->getFirstMediaUrl($name, 'thumb') }}'],
-                    initialPreviewAsData: true,
-                    initialPreviewConfig: [
-                        {
-                            caption: '{{ $value->getFirstMedia($name)->name }}',
-                            downloadUrl: '{{ $value->getFirstMediaUrl($name, 'thumb') }}',
-                            size: '{{ $value->getFirstMedia($name)->size }}',
-                            key: '{{ $value->getFirstMedia($name)->getCustomProperty('uuid') }}',
-                        },
-                    ],
+                initialPreview: ['{{ $value->getFirstMediaUrl($name, 'thumb') }}'],
+                initialPreviewAsData: true,
+                initialPreviewConfig: [
+                    {
+                        caption: '{{ $value->getFirstMedia($name)->name }}',
+                        downloadUrl: '{{ $value->getFirstMediaUrl($name, 'thumb') }}',
+                        size: '{{ $value->getFirstMedia($name)->size }}',
+                        key: '{{ $value->getFirstMedia($name)->getCustomProperty('uuid') }}',
+                    },
+                ],
                 @endif
-            // }).on('fileselect', function(event, data) {
-            //     if(el.parents('.file-input').find('.file-preview .file-preview-thumbnails').html().trim() !== '') {
-            //         console.log('parou');
-            //         event.preventDefault();
-            //     }
+                // }).on('fileselect', function(event, data) {
+                //     if(el.parents('.file-input').find('.file-preview .file-preview-thumbnails').html().trim() !== '') {
+                //         console.log('parou');
+                //         event.preventDefault();
+                //     }
             }).on("filebatchselected", function(event, files) {
                 el.fileinput("upload");
             }).on('filebatchuploadsuccess', function(event, data) {
