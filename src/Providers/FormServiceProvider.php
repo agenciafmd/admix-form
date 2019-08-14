@@ -73,13 +73,22 @@ class FormServiceProvider extends ServiceProvider
             'type' => 'date'
         ]);
 
+        Form::component('bsTime', 'agenciafmd/form::components.form.generic', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+            'type' => 'time'
+        ]);
+
         Form::component('bsDateTime', 'agenciafmd/form::components.form.generic', [
             'label',
             'name',
             'value' => null,
             'attributes' => [],
             'helper' => null,
-            'type' => 'datetime-local'
+            'type' => 'datetimeLocal'
         ]);
 
         Form::component('bsTel', 'agenciafmd/form::components.form.generic', [
