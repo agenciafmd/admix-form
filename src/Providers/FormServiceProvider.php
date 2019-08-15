@@ -159,7 +159,7 @@ class FormServiceProvider extends ServiceProvider
             'helper' => null,
         ]);
 
-        Form::component('bsTextarea', 'agenciafmd/form::components.form.textarea', [
+        Form::component('bsTextarea', 'agenciafmd/form::components.form.wysiwyg', [
             'label',
             'name',
             'value' => null,
@@ -167,7 +167,7 @@ class FormServiceProvider extends ServiceProvider
             'helper' => null,
         ]);
 
-        Form::component('bsWysiwyg', 'agenciafmd/form::components.form.wysiwyg', [
+        Form::component('bsTextareaPlain', 'agenciafmd/form::components.form.textarea', [
             'label',
             'name',
             'value' => null,
