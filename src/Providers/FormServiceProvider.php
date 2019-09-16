@@ -2,8 +2,8 @@
 
 namespace Agenciafmd\Form\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Form;
+use Illuminate\Support\ServiceProvider;
 
 class FormServiceProvider extends ServiceProvider
 {
@@ -152,6 +152,14 @@ class FormServiceProvider extends ServiceProvider
         ]);
 
         Form::component('bsImage', 'agenciafmd/form::components.form.image', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+        ]);
+
+        Form::component('bsGallery', 'agenciafmd/form::components.form.gallery', [
             'label',
             'name',
             'value' => null,
