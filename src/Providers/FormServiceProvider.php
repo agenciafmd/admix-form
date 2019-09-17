@@ -159,7 +159,23 @@ class FormServiceProvider extends ServiceProvider
             'helper' => null,
         ]);
 
-        Form::component('bsGallery', 'agenciafmd/form::components.form.gallery', [
+        Form::component('bsImages', 'agenciafmd/form::components.form.images', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+        ]);
+
+        Form::component('bsMedia', 'agenciafmd/form::components.form.media', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+        ]);
+
+        Form::component('bsMedias', 'agenciafmd/form::components.form.medias', [
             'label',
             'name',
             'value' => null,
