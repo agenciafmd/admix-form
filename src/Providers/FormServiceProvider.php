@@ -3,12 +3,15 @@
 namespace Agenciafmd\Form\Providers;
 
 use Form;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class FormServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        $this->loadConfigs();
+
         $this->loadViews();
 
         $this->loadTranslations();
@@ -31,125 +34,35 @@ class FormServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'agenciafmd/form');
     }
 
+    protected function loadConfigs()
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/forms.php', 'admix.forms');
+    }
+
     protected function loadComponents()
     {
-        Form::component('bsOpen', 'agenciafmd/form::components.form.open', [
-            'params' => [],
-        ]);
+        Blade::include('agenciafmd/form::includes.form-open', 'formOpen');
+        Blade::directive('formClose', function ($expression) {
+            return "<?php echo '</form>'; ?>";
+        });
 
-        Form::component('bsText', 'agenciafmd/form::components.form.generic', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'type' => 'text'
-        ]);
-
-        Form::component('bsEmail', 'agenciafmd/form::components.form.generic', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'type' => 'email'
-        ]);
-
-        Form::component('bsNumber', 'agenciafmd/form::components.form.generic', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'type' => 'number'
-        ]);
-
-        Form::component('bsDate', 'agenciafmd/form::components.form.generic', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'type' => 'date'
-        ]);
-
-        Form::component('bsTime', 'agenciafmd/form::components.form.generic', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'type' => 'time'
-        ]);
-
-        Form::component('bsDateTime', 'agenciafmd/form::components.form.generic', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'type' => 'datetimeLocal'
-        ]);
-
-        Form::component('bsTel', 'agenciafmd/form::components.form.generic', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'type' => 'tel'
-        ]);
-
-        Form::component('bsColor', 'agenciafmd/form::components.form.generic', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'type' => 'color'
-        ]);
-
-        Form::component('bsPassword', 'agenciafmd/form::components.form.password', [
-            'label',
-            'name',
-            'attributes' => [],
-            'helper' => null
-        ]);
-
-        Form::component('bsSelect', 'agenciafmd/form::components.form.select', [
-            'label',
-            'name',
-            'options' => [],
-            'value' => null,
-            'attributes' => [],
-            'helper' => null
-        ]);
-
-        Form::component('bsIsActive', 'agenciafmd/form::components.form.select', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'options' => [
-                '' => '-',
-                '1' => 'Sim',
-                '0' => 'Não',
-            ],
-        ]);
-
-        Form::component('bsBoolean', 'agenciafmd/form::components.form.select', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-            'options' => [
-                '' => '-',
-                '1' => 'Sim',
-                '0' => 'Não',
-            ],
-        ]);
+        Blade::include('agenciafmd/form::includes.label', 'inputLabel');
+        
+        Blade::include('agenciafmd/form::includes.input.types.text', 'inputText');
+        Blade::include('agenciafmd/form::includes.input.types.email', 'inputEmail');
+        Blade::include('agenciafmd/form::includes.input.types.number', 'inputNumber');
+        Blade::include('agenciafmd/form::includes.input.types.password', 'inputPassword');
+        Blade::include('agenciafmd/form::includes.input.types.date', 'inputDate');
+        Blade::include('agenciafmd/form::includes.input.types.time', 'inputTime');
+        Blade::include('agenciafmd/form::includes.input.types.datetime', 'inputDateTime');
+        Blade::include('agenciafmd/form::includes.input.types.tel', 'inputTel');
+        Blade::include('agenciafmd/form::includes.input.types.color', 'inputColor');
+        Blade::include('agenciafmd/form::includes.select.types.common', 'inputSelect');
+        Blade::include('agenciafmd/form::includes.select.types.is-active', 'inputIsActive');
+        Blade::include('agenciafmd/form::includes.select.types.boolean', 'inputBoolean');
+        Blade::include('agenciafmd/form::includes.select.types.boolean', 'inputBoolean');
+        Blade::include('agenciafmd/form::includes.textarea.types.wysiwyg', 'inputTextarea');
+        Blade::include('agenciafmd/form::includes.textarea.types.plain', 'inputTextareaPlain');
 
         Form::component('bsImage', 'agenciafmd/form::components.form.image', [
             'label',
@@ -176,22 +89,6 @@ class FormServiceProvider extends ServiceProvider
         ]);
 
         Form::component('bsMedias', 'agenciafmd/form::components.form.medias', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-        ]);
-
-        Form::component('bsTextarea', 'agenciafmd/form::components.form.wysiwyg', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-        ]);
-
-        Form::component('bsTextareaPlain', 'agenciafmd/form::components.form.textarea', [
             'label',
             'name',
             'value' => null,
