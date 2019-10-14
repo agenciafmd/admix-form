@@ -2,6 +2,9 @@
 
 return [
     'form' => [],
+    'label' => [
+        'class' => 'col-xl-3 col-form-label pt-0 pt-xl-2',
+    ],
     'input' => [
         'text' => [
             'class' => 'form-control',

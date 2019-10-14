@@ -4,4 +4,4 @@
     $attributes = $__data[2] ?? [];
 @endphp
 
-<label for="{{ $name }}" {!! attributesToString($attributes) !!}>{{ $label }}</label>
+<label for="{{ $name }}" {!! attributesToString($attributes + config('admix.forms.label')) !!}>{{ $label }}</label>
