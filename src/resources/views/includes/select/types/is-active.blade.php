@@ -7,6 +7,7 @@
 
 @include('agenciafmd/form::includes.select.select-base', [
     'name' => $name,
+    'value' => $value,
     'selectedValue' => $value,
     'options' => $options,
     'attributes' => $attributes,

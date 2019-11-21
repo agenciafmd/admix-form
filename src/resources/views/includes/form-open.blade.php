@@ -10,7 +10,11 @@
 
 <form action="{!! $action !!}" method="{!! $methodForm !!}"
       {!! attributesToString($attributes) !!} enctype="multipart/form-data" novalidate>
+
 @if(($method != 'get') && ($method != 'post'))
     @method($method)
 @endif
-@csrf
+
+@if($method != 'get')
+    @csrf
+@endif
