@@ -1,7 +1,7 @@
 @php
     $name = $__data[0];
-    $label = $__data[1];
+    $for = $__data[1];
     $attributes = $__data[2] ?? [];
 @endphp
 
-<label for="{{ $name }}" {!! attributesToString($attributes + config('admix.forms.label')) !!}>{{ $label }}</label>
+<label for="{{ $for }}" {!! attributesToString($attributes) !!}>{{ $name }}</label>

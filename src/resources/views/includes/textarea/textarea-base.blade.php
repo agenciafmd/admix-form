@@ -1,1 +1,1 @@
-<textarea name="{{ $name }}" id="{{ $name }}" {!! $attributes !!}>{!! $value !!}</textarea>
+<textarea name="{{ $name }}" id="{{ $name }}" {!! attributesToString($attributes) !!}>{!! $value !!}</textarea>

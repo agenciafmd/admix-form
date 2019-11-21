@@ -17,6 +17,10 @@ class FormServiceProvider extends ServiceProvider
         $this->loadTranslations();
 
         $this->loadComponents();
+
+        $this->app->singleton('form-model', function () {
+            return collect();
+        });
     }
 
     public function register()
@@ -42,16 +46,19 @@ class FormServiceProvider extends ServiceProvider
     protected function loadComponents()
     {
         Blade::include('agenciafmd/form::includes.form-open', 'formOpen');
+        Blade::include('agenciafmd/form::includes.form-model', 'formModel');
         Blade::directive('formClose', function ($expression) {
             return "<?php echo '</form>'; ?>";
         });
+        Blade::include('agenciafmd/form::includes.label', 'label');
+        Blade::include('agenciafmd/form::includes.invalid-feedback', 'invalidFeedback');
+        Blade::include('agenciafmd/form::includes.helper', 'helper');
 
-        Blade::include('agenciafmd/form::includes.label', 'inputLabel');
-        
         Blade::include('agenciafmd/form::includes.input.types.text', 'inputText');
         Blade::include('agenciafmd/form::includes.input.types.email', 'inputEmail');
         Blade::include('agenciafmd/form::includes.input.types.number', 'inputNumber');
         Blade::include('agenciafmd/form::includes.input.types.password', 'inputPassword');
+        Blade::include('agenciafmd/form::includes.input.types.hidden', 'inputHidden');
         Blade::include('agenciafmd/form::includes.input.types.date', 'inputDate');
         Blade::include('agenciafmd/form::includes.input.types.time', 'inputTime');
         Blade::include('agenciafmd/form::includes.input.types.datetime', 'inputDateTime');
@@ -60,9 +67,16 @@ class FormServiceProvider extends ServiceProvider
         Blade::include('agenciafmd/form::includes.select.types.common', 'inputSelect');
         Blade::include('agenciafmd/form::includes.select.types.is-active', 'inputIsActive');
         Blade::include('agenciafmd/form::includes.select.types.boolean', 'inputBoolean');
-        Blade::include('agenciafmd/form::includes.select.types.boolean', 'inputBoolean');
         Blade::include('agenciafmd/form::includes.textarea.types.wysiwyg', 'inputTextarea');
         Blade::include('agenciafmd/form::includes.textarea.types.plain', 'inputTextareaPlain');
+
+        Blade::include('agenciafmd/form::includes.group.types.text', 'formGroupText');
+        Blade::include('agenciafmd/form::includes.group.types.email', 'formGroupEmail');
+        Blade::include('agenciafmd/form::includes.group.types.password', 'formGroupPassword');
+
+        Blade::include('agenciafmd/form::includes.inline.types.text', 'formText');
+        Blade::include('agenciafmd/form::includes.inline.types.email', 'formEmail');
+        Blade::include('agenciafmd/form::includes.inline.types.password', 'formPassword');
 
         Form::component('bsImage', 'agenciafmd/form::components.form.image', [
             'label',

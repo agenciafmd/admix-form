@@ -11,5 +11,5 @@
 @include('agenciafmd/form::includes.textarea.textarea-base', [
     'name' => $name,
     'value' => $value,
-    'attributes' => attributesToString($attributes + config('admix.forms.textarea.plain')),
+    'attributes' => $attributes,
 ])
