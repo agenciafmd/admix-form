@@ -17,10 +17,10 @@
         unset($attributes['config']);
     }
 
-    $width = $fields[$name]['width'] ?? 800;
-    $height = $fields[$name]['height'] ?? 600;
-    $quality = $fields[$name]['quality'] ?? 92;
-    $crop = $fields[$name]['crop'] ?? false;
+    $width = $fields['width'] ?? 800;
+    $height = $fields['height'] ?? 600;
+    $quality = $fields['quality'] ?? 92;
+    $crop = $fields['crop'] ?? false;
 @endphp
 
 <li class="list-group-item">
