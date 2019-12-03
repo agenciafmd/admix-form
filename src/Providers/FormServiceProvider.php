@@ -65,6 +65,10 @@ class FormServiceProvider extends ServiceProvider
         Blade::include('agenciafmd/form::includes.input.types.tel', 'inputTel');
         Blade::include('agenciafmd/form::includes.input.types.color', 'inputColor');
         Blade::include('agenciafmd/form::includes.input.types.checkbox', 'inputCheckbox');
+        Blade::include('agenciafmd/form::includes.input.types.image', 'inputImage');
+        Blade::include('agenciafmd/form::includes.input.types.images', 'inputImages');
+        Blade::include('agenciafmd/form::includes.input.types.media', 'inputMedia');
+        Blade::include('agenciafmd/form::includes.input.types.medias', 'inputMedias');
         Blade::include('agenciafmd/form::includes.select.types.common', 'inputSelect');
         Blade::include('agenciafmd/form::includes.select.types.is-active', 'inputIsActive');
         Blade::include('agenciafmd/form::includes.select.types.boolean', 'inputBoolean');
@@ -80,6 +84,10 @@ class FormServiceProvider extends ServiceProvider
         Blade::include('agenciafmd/form::includes.inline.types.password', 'formPassword');
         Blade::include('agenciafmd/form::includes.inline.types.select', 'formSelect');
         Blade::include('agenciafmd/form::includes.inline.types.is-active', 'formIsActive');
+        Blade::include('agenciafmd/form::includes.inline.types.image', 'formImage');
+        Blade::include('agenciafmd/form::includes.inline.types.images', 'formImages');
+        Blade::include('agenciafmd/form::includes.inline.types.media', 'formMedia');
+        Blade::include('agenciafmd/form::includes.inline.types.medias', 'formMedias');
 
         Form::component('bsImage', 'agenciafmd/form::components.form.image', [
             'label',
