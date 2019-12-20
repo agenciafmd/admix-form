@@ -88,37 +88,5 @@ class FormServiceProvider extends ServiceProvider
         Blade::include('agenciafmd/form::includes.inline.types.images', 'formImages');
         Blade::include('agenciafmd/form::includes.inline.types.media', 'formMedia');
         Blade::include('agenciafmd/form::includes.inline.types.medias', 'formMedias');
-
-        Form::component('bsImage', 'agenciafmd/form::components.form.image', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-        ]);
-
-        Form::component('bsImages', 'agenciafmd/form::components.form.images', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-        ]);
-
-        Form::component('bsMedia', 'agenciafmd/form::components.form.media', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-        ]);
-
-        Form::component('bsMedias', 'agenciafmd/form::components.form.medias', [
-            'label',
-            'name',
-            'value' => null,
-            'attributes' => [],
-            'helper' => null,
-        ]);
     }
 }

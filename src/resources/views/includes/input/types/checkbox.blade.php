@@ -17,6 +17,10 @@
 
     $attributes['class'] = $formControl . ' ' . ($errors->{$bag}->has($name) ? 'is-invalid ' : '') . (($attributes['class']) ?? '');
 
+    if(!is_array($value)) {
+        $value = [];
+    }
+
     if(in_array($option, $value)) {
         $attributes['checked'] = 'checked';
     }

@@ -16,7 +16,7 @@
 
 <select name="{{ $name }}" id="{{ $name }}" {!! attributesToString($attributes) !!}>
     @foreach ($options as $key => $value)
-        @if ((string)$key === $selectedValue)
+        @if ((string)$key === (string)$selectedValue)
             <option value="{{ $key }}" selected="selected">{{ $value }}</option>
         @else
             <option value="{{ $key }}">{{ $value }}</option>
