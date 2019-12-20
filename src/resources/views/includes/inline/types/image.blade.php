@@ -37,7 +37,7 @@
     <div class="row gutters-sm single-upload">
         @label([$label . " ({$width}x{$height})", $name, ['class' => 'col-xl-3 col-form-label pt-0 pt-xl-2']])
         <div class="col-xl-5">
-            @inputImage([$name, $user, $attributes])
+            @inputImage([$name, $value, $attributes])
             @invalidFeedback([$name, $label])
         </div>
         @helper([$name, $helper])

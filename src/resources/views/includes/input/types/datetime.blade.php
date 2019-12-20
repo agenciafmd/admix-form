@@ -5,7 +5,7 @@
 @endphp
 
 @include('agenciafmd/form::includes.input.input-base', [
-    'type' => 'datetime',
+    'type' => 'datetime-local',
     'name' => $name,
     'value' => $value,
     'attributes' => $attributes,
