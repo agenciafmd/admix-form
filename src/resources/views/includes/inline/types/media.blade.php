@@ -24,7 +24,7 @@
     <div class="row gutters-sm single-upload">
         @label([$label, $name, ['class' => 'col-xl-3 col-form-label pt-0 pt-xl-2']])
         <div class="col-xl-5">
-            @inputMedia([$name, $user, $attributes])
+            @inputMedia([$name, $value, $attributes])
             @invalidFeedback([$name, $label])
         </div>
         @helper([$name, $helper])
