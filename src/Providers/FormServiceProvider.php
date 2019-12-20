@@ -83,6 +83,8 @@ class FormServiceProvider extends ServiceProvider
         Blade::include('agenciafmd/form::includes.inline.types.email', 'formEmail');
         Blade::include('agenciafmd/form::includes.inline.types.password', 'formPassword');
         Blade::include('agenciafmd/form::includes.inline.types.select', 'formSelect');
+        Blade::include('agenciafmd/form::includes.inline.types.wysiwyg', 'formTextarea');
+        Blade::include('agenciafmd/form::includes.inline.types.textarea', 'formTextareaPlain');
         Blade::include('agenciafmd/form::includes.inline.types.is-active', 'formIsActive');
         Blade::include('agenciafmd/form::includes.inline.types.image', 'formImage');
         Blade::include('agenciafmd/form::includes.inline.types.images', 'formImages');

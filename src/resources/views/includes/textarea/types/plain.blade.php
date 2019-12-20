@@ -4,8 +4,12 @@
     $attributes = $__data[3] ?? [];
 
     if (isset($attributes['class'])) {
-        $attributes['class'] = str_replace('js-wysiwyg', '', $attributes['class']);
-    }// if
+        $attributes['class'] = 'form-control ' . str_replace('js-wysiwyg', '', $attributes['class']);
+    }
+    else {
+        $attributes['class'] = 'form-control ';
+    }
+
 @endphp
 
 @include('agenciafmd/form::includes.textarea.textarea-base', [
