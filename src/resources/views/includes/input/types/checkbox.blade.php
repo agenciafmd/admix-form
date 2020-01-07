@@ -1,7 +1,7 @@
 @php
     $name = $__data[0];
     $option = $__data[1];
-    $value = $__data[2] ?? old($name, optional(app()->make('form-model')->first())->{str_replace('[]', '', $name)});
+    $value = $__data[2] ?? old($name, app()->make('form-model')->first()->{str_replace('[]', '', $name)});
     $attributes = $__data[3] ?? [];
 
     $formControl = 'custom-control-input';
