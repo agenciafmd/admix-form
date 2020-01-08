@@ -1,6 +1,6 @@
 @php
     $name = $__data[0];
-    $value = $__data[1] ?? old($name, app()->make('form-model')->first()->{$name});
+    $value = $__data[1] ?? old($name, ($item = app()->make('form-model')->first()) ? $item->{$name} : null);
     $attributes = $__data[2] ?? [];
 @endphp
 
