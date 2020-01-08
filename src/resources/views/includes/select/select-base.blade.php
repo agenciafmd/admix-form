@@ -15,11 +15,13 @@
 @endphp
 
 <select name="{{ $name }}" id="{{ $name }}" {!! attributesToString($attributes) !!}>
+  @if (is_array($selectedValue))
     @foreach ($options as $key => $value)
-        @if ((string)$key === (string)$selectedValue)
-            <option value="{{ $key }}" selected="selected">{{ $value }}</option>
-        @else
-            <option value="{{ $key }}">{{ $value }}</option>
-        @endif
+      <option value="{{ $key }}"{{ (in_array($key, $selectedValue)) ? ' selected="selected"' : '' }}>{{ $value }}</option>
     @endforeach
+  @else
+    @foreach ($options as $key => $value)
+        <option value="{{ $key }}"{{ ($key == $selectedValue) ? ' selected="selected"' : '' }}>{{ $value }}</option>
+    @endforeach
+  @endif
 </select>
