@@ -56,25 +56,36 @@ class FormServiceProvider extends ServiceProvider
 
         Blade::include('agenciafmd/form::includes.input.types.text', 'inputText');
         Blade::include('agenciafmd/form::includes.input.types.email', 'inputEmail');
+        Blade::include('agenciafmd/form::includes.input.types.tel', 'inputTel');
         Blade::include('agenciafmd/form::includes.input.types.number', 'inputNumber');
         Blade::include('agenciafmd/form::includes.input.types.password', 'inputPassword');
         Blade::include('agenciafmd/form::includes.input.types.hidden', 'inputHidden');
+        
         Blade::include('agenciafmd/form::includes.input.types.date', 'inputDate');
         Blade::include('agenciafmd/form::includes.input.types.time', 'inputTime');
         Blade::include('agenciafmd/form::includes.input.types.datetime', 'inputDatetime');
-        Blade::include('agenciafmd/form::includes.input.types.tel', 'inputTel');
+        
         Blade::include('agenciafmd/form::includes.input.types.color', 'inputColor');
         Blade::include('agenciafmd/form::includes.input.types.checkbox', 'inputCheckbox');
+        
         Blade::include('agenciafmd/form::includes.input.types.image', 'inputImage');
         Blade::include('agenciafmd/form::includes.input.types.images', 'inputImages');
+        
         Blade::include('agenciafmd/form::includes.input.types.media', 'inputMedia');
         Blade::include('agenciafmd/form::includes.input.types.medias', 'inputMedias');
+        
+        Blade::include('agenciafmd/form::includes.input.types.file', 'inputFile');
+
         Blade::include('agenciafmd/form::includes.select.types.common', 'inputSelect');
         Blade::include('agenciafmd/form::includes.select.types.is-active', 'inputIsActive');
         Blade::include('agenciafmd/form::includes.select.types.boolean', 'inputBoolean');
+
         Blade::include('agenciafmd/form::includes.textarea.types.wysiwyg', 'inputTextarea');
         Blade::include('agenciafmd/form::includes.textarea.types.plain', 'inputTextareaPlain');
-
+        
+        // ---------------------------------------------------------------------
+        // Admix form
+        // ---------------------------------------------------------------------
         Blade::include('agenciafmd/form::includes.group.types.text', 'formGroupText');
         Blade::include('agenciafmd/form::includes.group.types.email', 'formGroupEmail');
         Blade::include('agenciafmd/form::includes.group.types.password', 'formGroupPassword');
