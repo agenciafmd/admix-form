@@ -12,8 +12,7 @@
     }
   ],
   "require": {
-    "laravel/framework": "6.*",
-    "laravelcollective/html": "6.0"
+    "laravel/framework": "6.*"
   },
   "autoload": {
     "files": [
