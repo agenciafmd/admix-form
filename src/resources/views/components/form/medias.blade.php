@@ -45,7 +45,7 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     };
                 },
-                @if($value->getMedia($name)->count() > 0)
+                @if(isset($value) && $value->getMedia($name)->count() > 0)
                 initialPreview: ["{!! $value->getMedia($name)->map(function($item) { return asset($item->getUrl()); })->implode('", "') !!}"],
                 initialPreviewAsData: true,
                 initialPreviewConfig: [
