@@ -1,0 +1,8 @@
+{
+    "namespaces": [
+        {
+            "namespace": "agenciafmd/form",
+            "path": "src/resources/views"
+        }
+    ]
+}
