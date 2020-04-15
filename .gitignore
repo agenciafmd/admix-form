@@ -1,2 +1,5 @@
-vendor/
+.phpunit.result.cache
+/node_module/
+/vendor/
 composer.lock
+npm-debug.log
