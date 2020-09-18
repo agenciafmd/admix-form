@@ -1,5 +1,5 @@
-@if($helper)
+@if($message)
     <small id="{{ $name }}Help" class="mt-2 form-text col text-muted">
-        {{ Str::limit($helper, 60, '') }}
+        {!! $message !!}
     </small>
 @endif

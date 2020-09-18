@@ -18,7 +18,7 @@ class FormServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
+        $this->loadConfigs();
     }
 
     protected function loadViews()
@@ -29,6 +29,11 @@ class FormServiceProvider extends ServiceProvider
     protected function loadTranslations()
     {
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'agenciafmd/form');
+    }
+
+    protected function loadConfigs()
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/admix-forms.php', 'form-components');
     }
 
     protected function loadComponents()
