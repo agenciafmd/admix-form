@@ -33,7 +33,7 @@ class FormServiceProvider extends ServiceProvider
 
     protected function loadConfigs()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/admix-forms.php', 'form-components');
+        //
     }
 
     protected function loadComponents()
@@ -188,7 +188,7 @@ class FormServiceProvider extends ServiceProvider
             'helper' => null,
         ]);
 
-        Form::component('bsTextarea', 'agenciafmd/form::components.form.wysiwyg', [
+        Form::component('bsWysiwyg', 'agenciafmd/form::components.form.wysiwyg', [
             'label',
             'name',
             'value' => null,
@@ -196,7 +196,15 @@ class FormServiceProvider extends ServiceProvider
             'helper' => null,
         ]);
 
-        Form::component('bsTextareaPlain', 'agenciafmd/form::components.form.textarea', [
+        Form::component('bsTextarea', 'agenciafmd/form::components.form.textarea', [
+            'label',
+            'name',
+            'value' => null,
+            'attributes' => [],
+            'helper' => null,
+        ]);
+
+        Form::component('bsMDE', 'agenciafmd/form::components.form.mde', [
             'label',
             'name',
             'value' => null,

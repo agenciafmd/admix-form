@@ -1,11 +1,5 @@
 @php
     $formControl = 'form-control';
-
-    if(strpos(request()->route()->getName(), 'show') !== false) {
-        $formControl = 'form-control-plaintext';
-        $attributes['disabled'] = true;
-    }
-
     $attributes['class'] = $formControl . ' ' . ($errors->admix->has($name) ? 'is-invalid ' : '') . (($attributes['class']) ?? '');
 @endphp
 
