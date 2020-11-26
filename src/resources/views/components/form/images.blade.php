@@ -6,17 +6,23 @@
     $attributes['multiple'] = true;
 
     $modelName = strtolower(class_basename($value));
-    $fields = config("upload-configs.{$modelName}");
+    $fields = config("upload-configs.{$modelName}.{$name}.sources.0");
 
     if (isset($attributes['config'])) {
       $fields = $attributes['config'];
       unset($attributes['config']);
     }
 
-    $width = $fields[$name]['width'] ?? 800;
-    $height = $fields[$name]['height'] ?? 600;
-    $quality = $fields[$name]['quality'] ?? 92;
-    $crop = $fields[$name]['crop'] ?? false;
+    $width = $fields['width'] ?? 800;
+    $height = $fields['height'] ?? 600;
+    $quality = $fields['quality'] ?? 92;
+    $crop = $fields['crop'] ?? false;
+    $conversion = $fields['conversion'] ?? 'thumb';
+
+    $preview = null;
+    if(isset($value)){
+        $preview = ($value->getMedia($name)) ?? null;
+    }
 @endphp
 
 <li class="list-group-item">
@@ -45,21 +51,21 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     };
                 },
-                maxImageWidth: '{{ $width*2 }}',
-                maxImageHeight: '{{ $height*2 }}',
+                maxImageWidth: '{{ $width*1.2 }}',
+                maxImageHeight: '{{ $height*1.2 }}',
                 resizeImage: true,
                 resizeImageQuality: '{{ number_format($quality/100, 2, '.', '') }}',
                 fileActionSettings: {
                     showDrag: true,
                 },
-                @if (isset($value) && $value->getMedia($name)->count() > 0)
-                initialPreview: ["{!! $value->getMedia($name)->map(function($item) { return asset($item->getUrl('thumb')); })->implode('", "') !!}"],
+                @if ($preview->count() > 0)
+                initialPreview: ['{!! $preview->map(fn($item) => asset($item->getUrl($conversion)))->implode("', '") !!}'],
                 initialPreviewAsData: true,
                 initialPreviewConfig: [
-                        @foreach($value->getMedia($name) as $item)
+                        @foreach($preview as $item)
                     {
                         caption: '{{ $item->name }}',
-                        downloadUrl: '{{ asset($item->getUrl('thumb')) }}',
+                        downloadUrl: '{{ asset($item->getUrl($conversion)) }}',
                         size: '{{ $item->size }}',
                         key: '{{ $item->getCustomProperty('uuid') }}'
                     },

@@ -16,6 +16,12 @@
     $height = $fields['height'] ?? 600;
     $quality = $fields['quality'] ?? 92;
     $crop = $fields['crop'] ?? false;
+    $conversion = $fields['conversion'] ?? 'thumb';
+
+    $preview = null;
+    if(isset($value)){
+        $preview = ($value->getFirstMedia($name)) ?? null;
+    }
 @endphp
 
 <li class="list-group-item">
@@ -43,19 +49,19 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     };
                 },
-                maxImageWidth: '{{ $width*2 }}',
-                maxImageHeight: '{{ $height*2 }}',
+                maxImageWidth: '{{ $width*1.2 }}',
+                maxImageHeight: '{{ $height*1.2 }}',
                 resizeImage: true,
                 resizeImageQuality: '{{ number_format($quality/100, 2, '.', '') }}',
-                @if (isset($value) && $value->getFirstMedia($name))
-                initialPreview: ['{{ $value->getFirstMediaUrl($name, 'thumb') }}'],
+                @if ($preview)
+                initialPreview: ['{{ $preview->getUrl($conversion) }}'],
                 initialPreviewAsData: true,
                 initialPreviewConfig: [
                     {
-                        caption: '{{ $value->getFirstMedia($name)->name }}',
-                        downloadUrl: '{{ $value->getFirstMediaUrl($name, 'thumb') }}',
-                        size: '{{ $value->getFirstMedia($name)->size }}',
-                        key: '{{ $value->getFirstMedia($name)->getCustomProperty('uuid') }}',
+                        caption: '{{ $preview->name }}',
+                        downloadUrl: '{{ asset($preview->getUrl($conversion)) }}',
+                        size: '{{ $preview->size }}',
+                        key: '{{ $preview->getCustomProperty('uuid') }}'
                     },
                 ],
                 @endif
