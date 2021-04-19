@@ -54,12 +54,12 @@
                 resizeImage: true,
                 resizeImageQuality: '{{ number_format($quality/100, 2, '.', '') }}',
                 @if ($preview)
-                initialPreview: ['{{ $preview->getUrl($conversion) }}'],
+                initialPreview: ['{{ $preview->getUrl($conversion) . '?' . uniqid() }}'],
                 initialPreviewAsData: true,
                 initialPreviewConfig: [
                     {
                         caption: '{{ $preview->name }}',
-                        downloadUrl: '{{ asset($preview->getUrl($conversion)) }}',
+                        downloadUrl: '{{ asset($preview->getUrl($conversion)) . '?' . uniqid() }}',
                         size: '{{ $preview->size }}',
                         key: '{{ $preview->getCustomProperty('uuid') }}'
                     },

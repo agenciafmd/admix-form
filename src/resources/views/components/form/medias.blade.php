@@ -41,13 +41,13 @@
                     };
                 },
                 @if (isset($value) && $value->getMedia($name)->count() > 0)
-                initialPreview: ["{!! $value->getMedia($name)->map(function($item) { return asset($item->getUrl()); })->implode('", "') !!}"],
+                initialPreview: ["{!! $value->getMedia($name)->map(function($item) { return asset($item->getUrl()) . '?' . uniqid(); })->implode('", "') !!}"],
                 initialPreviewAsData: true,
                 initialPreviewConfig: [
                         @foreach($value->getMedia($name) as $item)
                     {
                         caption: '{{ $item->name }}',
-                        downloadUrl: '{{ asset($item->getUrl()) }}',
+                        downloadUrl: '{{ asset($item->getUrl()) . '?' . uniqid() }}',
                         size: '{{ $item->size }}',
                         key: '{{ $item->getCustomProperty('uuid') }}'
                     },

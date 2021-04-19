@@ -59,13 +59,13 @@
                     showDrag: true,
                 },
                 @if ($preview->count() > 0)
-                initialPreview: ['{!! $preview->map(fn($item) => asset($item->getUrl($conversion)))->implode("', '") !!}'],
+                initialPreview: ['{!! $preview->map(fn($item) => asset($item->getUrl($conversion)) . '?' . uniqid())->implode("', '") !!}'],
                 initialPreviewAsData: true,
                 initialPreviewConfig: [
                         @foreach($preview as $item)
                     {
                         caption: '{{ $item->name }}',
-                        downloadUrl: '{{ asset($item->getUrl($conversion)) }}',
+                        downloadUrl: '{{ asset($item->getUrl($conversion)) . '?' . uniqid() }}',
                         size: '{{ $item->size }}',
                         key: '{{ $item->getCustomProperty('uuid') }}'
                     },

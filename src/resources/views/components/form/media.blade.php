@@ -38,12 +38,12 @@
                     };
                 },
                 @if (isset($value) && $value->getFirstMedia($name))
-                initialPreview: ['{{ $value->getFirstMediaUrl($name) }}'],
+                initialPreview: ['{{ $value->getFirstMediaUrl($name) . '?' . uniqid() }}'],
                 initialPreviewAsData: true,
                 initialPreviewConfig: [
                     {
                         caption: '{{ $value->getFirstMedia($name)->name }}',
-                        downloadUrl: '{{ $value->getFirstMediaUrl($name) }}',
+                        downloadUrl: '{{ $value->getFirstMediaUrl($name) . '?' . uniqid() }}',
                         size: '{{ $value->getFirstMedia($name)->size }}',
                         key: '{{ $value->getFirstMedia($name)->getCustomProperty('uuid') }}',
                     },
