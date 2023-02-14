@@ -4,6 +4,8 @@
     $attributes['class'] = $formControl . ' ' . ($errors->admix->has($name) ? 'is-invalid ' : '') . (($attributes['class']) ?? '');
     $attributes['id'] = $attributes['id'] ?? Str::slug($name);
     $attributes['multiple'] = true;
+    $maxSize = $attributes['maxSize'] ?: min(convert_bytes(ini_get('post_max_size')), convert_bytes(ini_get('upload_max_filesize')))/1024/2;
+    unset($attributes['maxSize']);
 @endphp
 
 <li class="list-group-item">
@@ -40,6 +42,7 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     };
                 },
+                maxFileSize: '{{ $maxSize }}',
                 @if (isset($value) && $value->getMedia($name)->count() > 0)
                 initialPreview: ["{!! $value->getMedia($name)->map(function($item) { return asset($item->getUrl()) . '?' . uniqid(); })->implode('", "') !!}"],
                 initialPreviewAsData: true,
@@ -64,6 +67,8 @@
                     el.parents('form').append('<input type="hidden" name="media[' + data.response[i].uuid + '][name][' + i + ']" value="' + data.response[i].name + '" />');
                     el.parents('form').append('<input type="hidden" name="media[' + data.response[i].uuid + '][collection][' + i + ']" value="' + data.response[i].collection + '" />');
                 }
+            }).on('filebatchuploaderror', function (event, data) {
+                $('.kv-fileinput-error.file-error-message ul > li:last').remove();
             });
         });
     </script>
