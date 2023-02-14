@@ -17,7 +17,7 @@
     $quality = $fields['quality'] ?? 92;
     $crop = $fields['crop'] ?? false;
     $conversion = $fields['conversion'] ?? 'thumb';
-    $maxSize = $fields['maxSize'] ?: min(convert_bytes(ini_get('post_max_size')), convert_bytes(ini_get('upload_max_filesize')))/1024/2;
+    $maxSize = $fields['maxSize'] ?? min(convert_bytes(ini_get('post_max_size')), convert_bytes(ini_get('upload_max_filesize')))/1024/2;
 
     $preview = null;
     if(isset($value)){
