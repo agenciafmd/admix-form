@@ -1,5 +1,6 @@
 @php
-    $attributes['class'] = 'form-control ' . ($errors->admix->has($name) ? 'is-invalid ' : '') . (($attributes['class']) ?? '');
+    $dottedName = str_replace(['[', ']'], ['.', ''], $name);
+    $attributes['class'] = 'form-control ' . ($errors->admix->has($dottedName) ? 'is-invalid ' : '') . (($attributes['class']) ?? '');
 @endphp
 
 @if(strpos(request()->route()->getName(), 'show') === false)

@@ -1,6 +1,7 @@
 @php
     $formControl = 'js-mde';
-    $attributes['class'] = $formControl . ' ' . ($errors->admix->has($name) ? 'is-invalid ' : '') . (($attributes['class']) ?? '');
+    $dottedName = str_replace(['[', ']'], ['.', ''], $name);
+    $attributes['class'] = $formControl . ' ' . ($errors->admix->has($dottedName) ? 'is-invalid ' : '') . (($attributes['class']) ?? '');
 @endphp
 
 <li class="list-group-item">

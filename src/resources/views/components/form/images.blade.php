@@ -1,7 +1,8 @@
 @php
     $formControl = 'form-control custom-select';
 
-    $attributes['class'] = $formControl . ' ' . ($errors->admix->has($name) ? 'is-invalid ' : '') . (($attributes['class']) ?? '');
+    $dottedName = str_replace(['[', ']'], ['.', ''], $name);
+    $attributes['class'] = $formControl . ' ' . ($errors->admix->has($dottedName) ? 'is-invalid ' : '') . (($attributes['class']) ?? '');
     $attributes['id'] = $attributes['id'] ?? Str::slug($name);
     $attributes['multiple'] = true;
 
